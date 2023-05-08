@@ -13,97 +13,105 @@ class ScrollScreen extends StatefulWidget {
 class _ScrollScreenState extends State<ScrollScreen> {
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      slivers: [
-        SliverAppBar.large(
-          title: const Text('SliverAppBar'),
-          floating: false,
-          pinned: true,
-          leading: IconButton(
-            icon: const Icon(Icons.menu),
-            onPressed: () {},
-          ),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.add_circle),
-              onPressed: () {},
+    return Scaffold(
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar.large(
+            title: const Text('SliverAppBar'),
+            floating: false,
+            pinned: true,
+            leading: IconButton(
+              icon: const Icon(Icons.menu),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
             ),
-          ],
-          //flexibleSpace: Placeholder(),
-          flexibleSpace: FlexibleSpaceBar(
-            title: const Text('FlexibleSpaceBar'),
-            background: Image.asset(
-              'images/forest.jpg',
-              fit: BoxFit.cover,
+            actions: [
+              IconButton(
+                icon: const Icon(Icons.add_circle),
+                onPressed: () {
+                  // push route to scroll_screen
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const ScrollScreen()));
+                },
+              ),
+            ],
+            //flexibleSpace: Placeholder(),
+            flexibleSpace: FlexibleSpaceBar(
+              title: const Text('FlexibleSpaceBar'),
+              background: Image.asset(
+                'images/forest.jpg',
+                fit: BoxFit.cover,
+              ),
             ),
+            // collapsedHeight: 150,
+            // toolbarHeight: 10,
+            expandedHeight: 150,
           ),
-          // collapsedHeight: 150,
-          // toolbarHeight: 10,
-          expandedHeight: 150,
-        ),
 
-        // silver grid
-        SliverGrid(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3,
-            mainAxisSpacing: 10,
-            crossAxisSpacing: 10,
-            //childAspectRatio: 1
-          ),
-          delegate: SliverChildBuilderDelegate(
-            (context, index) => Container(
-              color: Colors.primaries[index % Colors.primaries.length],
+          // silver grid
+          SliverGrid(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3,
+              mainAxisSpacing: 10,
+              crossAxisSpacing: 10,
+              //childAspectRatio: 1
             ),
-            childCount: 20,
+            delegate: SliverChildBuilderDelegate(
+              (context, index) => Container(
+                color: Colors.primaries[index % Colors.primaries.length],
+              ),
+              childCount: 20,
+            ),
           ),
-        ),
-        // create silver persisent header
-        SliverPersistentHeader(
-          floating: true,
-          pinned: true,
-          delegate: _SliverAppBarDelegate(
-            minHeight: 150 + kToolbarHeight,
-            maxHeight: 200 + kToolbarHeight,
-            child: Container(
-              color: Colors.blue,
-              child: const Center(
-                child: Text('SliverPersistentHeader'),
+          // create silver persisent header
+          SliverPersistentHeader(
+            floating: true,
+            pinned: true,
+            delegate: _SliverAppBarDelegate(
+              minHeight: 150 + kToolbarHeight,
+              maxHeight: 200 + kToolbarHeight,
+              child: Container(
+                color: Colors.blue,
+                child: const Center(
+                  child: Text('SliverPersistentHeader'),
+                ),
               ),
             ),
           ),
-        ),
 
-        // silver divider
-        const SliverToBoxAdapter(
-          child: Divider(
-            color: Colors.grey,
-            height: 50,
-            thickness: 5,
-            indent: 20,
-            endIndent: 20,
-          ),
-        ),
-        // silver fixed extent list item
-        SliverFixedExtentList(
-          itemExtent: 50,
-          delegate: SliverChildBuilderDelegate(
-            (context, index) => ListTile(
-              title: Text('Item #$index'),
+          // silver divider
+          const SliverToBoxAdapter(
+            child: Divider(
+              color: Colors.grey,
+              height: 50,
+              thickness: 5,
+              indent: 20,
+              endIndent: 20,
             ),
-            childCount: 20,
           ),
-        ),
+          // silver fixed extent list item
+          SliverFixedExtentList(
+            itemExtent: 50,
+            delegate: SliverChildBuilderDelegate(
+              (context, index) => ListTile(
+                title: Text('Item #$index'),
+              ),
+              childCount: 20,
+            ),
+          ),
 
-        // item
-        SliverList(
-          delegate: SliverChildBuilderDelegate(
-            (context, index) => ListTile(
-              title: Text('Item #$index'),
+          // item
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) => ListTile(
+                title: Text('Item #$index'),
+              ),
+              childCount: 20,
             ),
-            childCount: 20,
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
